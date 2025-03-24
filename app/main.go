@@ -21,25 +21,25 @@ var temp = template.Must(template.ParseGlob("templates/*.html"))
 func main() {
     http.HandleFunc("/", index)
 
-    log.Println("Servidor rodando em http://localhost:8080")
-    err := http.ListenAndServe(":8080", nil)
+    log.Println("Servidor rodando em http://localhost:8081")
+    err := http.ListenAndServe(":8081", nil)
     if err != nil {
         log.Fatal("Erro ao iniciar o servidor:", err)
     }
 }
 
-// Função para colocar os produtos na página inicial
 func index(w http.ResponseWriter, r *http.Request) {
     log.Println("Acessaram a rota /")
 
-    // Conectando ao banco de dados Supabase
-	// Murik444@
-    connStr := "postgresql://postgres:"senha"@db.snriwwglaqhtqdyucedt.supabase.co:5432/postgres"
+    // String de conexão com o Supabase
+    // colocar a senha Murik444@
+    connStr := "postgres://postgres:Murik444@@snriwwglaqhtqdyucedt.supabase.co:5432/postgres?sslmode=require"
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         log.Fatal("Erro ao conectar ao banco de dados:", err)
     }
     defer db.Close()
+
     // Buscando produtos do banco de dados
     rows, err := db.Query("SELECT nome, descricao, preco, quantidade FROM produtos")
     if err != nil {
@@ -63,3 +63,27 @@ func index(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Erro interno no servidor", http.StatusInternalServerError)
     }
 }
+
+// package main
+
+// import (
+// 	// "app/db"
+// 	// "app/routes"
+// 	"log"
+// 	"net/http"
+//     "db"
+//     "routes"
+// )
+
+// func main() {
+// 	// Inicializa a conexão com o banco de dados
+// 	db.Init()
+// 	defer db.Close()
+
+// 	// Configura as rotas
+// 	routes.SetupRoutes()
+
+// 	// Inicia o servidor
+// 	log.Println("Servidor rodando em http://localhost:8080")
+// 	log.Fatal(http.ListenAndServe(":8080", nil))
+// }
